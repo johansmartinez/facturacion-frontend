@@ -1,0 +1,29 @@
+<div class="data">
+    <h2>PROVEEDORES</h2>
+    <div class="row-reverse">
+        <button class="add-button"(click)="proveedoresService.setModal('AGREGAR')">AGREGAR</button>
+    </div>
+    <div>
+        <table>
+            <thead>
+                <tr>
+                    <th>NIF</th>
+                    <th>NOMBRE</th>
+                    <th>DIRECCION</th>
+                    <th>OPERACIONES</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let proveedor of proveedoresService.proveedores">
+                    <td>{{proveedor.nif}}</td>
+                    <td>{{proveedor.nombre}}</td>
+                    <td>{{proveedor.direccion}}</td>
+                    <td><button class="edit-button" (click)="edit(proveedor)">EDITAR</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div *ngIf="proveedoresService.modal!=''" class="modal">
+    <proveedor-form></proveedor-form>
+</div>

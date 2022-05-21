@@ -1,0 +1,11 @@
+<nav >
+    <button (click)="menuServicie.setVisible(true)"> <img src="../../../../assets/menu.png"></button>
+    <div>TIENDA</div>
+</nav>
+<div [class.close]="!menuServicie.visible" *ngIf="menuServicie.visible" class="menu">
+    <div class="close-item" (click)="menuServicie.setVisible(false)"> X</div>
+    <div (click)="menuServicie.seleccionar('CLIENTES')">CLIENTES</div>
+    <div (click)="menuServicie.seleccionar('PRODUCTOS')">PRODUCTOS</div>
+    <div (click)="menuServicie.seleccionar('PROVEEDORES')">PROVEEDORES</div>
+    <div (click)="menuServicie.seleccionar('FACTURAS')">FACTURAS</div>
+</div>

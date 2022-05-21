@@ -1,0 +1,8 @@
+<app-nav></app-nav>
+<div [ngSwitch]="menuService.seleccion" class="container" (click)="menuService.setVisible(false)">
+
+    <app-productos *ngSwitchCase="'PRODUCTOS'"></app-productos>
+    <app-proveedores *ngSwitchCase="'PROVEEDORES'"></app-proveedores>
+    <app-clientes *ngSwitchCase="'CLIENTES'"></app-clientes>
+    <app-facturas *ngSwitchCase="'FACTURAS'"></app-facturas>
+</div>

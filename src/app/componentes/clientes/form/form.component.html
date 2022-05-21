@@ -1,0 +1,64 @@
+<div class="form-container">
+    <div class="row">
+        <div>{{clienteService.modal}} CLIENTE</div>
+        <button (click)="clienteService.setModal('')"> X </button>
+    </div>
+    <form *ngIf="clienteService.modal=='EDITAR'" #form="ngForm" class="form-add" (ngSubmit)="submit($event)">
+    
+        <label>
+            Nombre:
+            <input type="text"  id="nombre" name="nombre" [(ngModel)]="clienteService.seleccionado.nombre" #nombre="ngModel" placeholder="Ingrese el nombre" required>
+            <p *ngIf="!nombre.valid" class="p-warning">Este campo es obligatorio</p>
+        </label>
+        <label>
+            Apellido:
+            <input type="text"  id="apellido" name="apellido" [(ngModel)]="clienteService.seleccionado.apellido" #apellido="ngModel" placeholder="Ingrese el apellido" required>
+            <p *ngIf="!apellido.valid" class="p-warning">Este campo es obligatorio</p>
+        </label>
+        <label>
+            Dirección:
+            <input type="text"  id="direccion" name="direccion" [(ngModel)]="clienteService.seleccionado.direccion" #direccion="ngModel" placeholder="Ingrese el direccion" required>
+            <p *ngIf="!direccion.valid" class="p-warning">Este campo es obligatorio</p>
+        </label>
+        <label>
+            Fecha de Nacimiento::
+            <input type="date"  id="fecha_nacimiento" name="fecha_nacimiento" [(ngModel)]="clienteService.seleccionado.fecha_nacimiento" #fecha_nacimiento="ngModel" placeholder="Ingrese el direccion" required>
+            <p *ngIf="!fecha_nacimiento.valid" class="p-warning">Este campo es obligatorio</p>
+        </label>
+        <button type="submit" class="send" [disabled]="!form.valid"
+            [class.valid]="form.valid"
+            [class.invalid]="!form.valid"
+        >{{clienteService.modal}}</button>
+    </form>
+    <form *ngIf="clienteService.modal=='AGREGAR'" #form="ngForm" class="form-add" (ngSubmit)="submit($event)">
+        <label>
+            DNI:
+            <input type="text"  id="dni" name="dni" [(ngModel)]="data.dni" #dni="ngModel" placeholder="Ingrese el dni" required>
+            <p *ngIf="!dni.valid" class="p-warning">Este campo es obligatorio</p>
+        </label>
+        <label>
+            Nombre:
+            <input type="text"  id="nombre" name="nombre" [(ngModel)]="data.nombre" #nombre="ngModel" placeholder="Ingrese el nombre" required>
+            <p *ngIf="!nombre.valid" class="p-warning">Este campo es obligatorio</p>
+        </label>
+        <label>
+            Apellido:
+            <input type="text"  id="apellido" name="apellido" [(ngModel)]="data.apellido" #apellido="ngModel" placeholder="Ingrese el apellido" required>
+            <p *ngIf="!apellido.valid" class="p-warning">Este campo es obligatorio</p>
+        </label>
+        <label>
+            Dirección:
+            <input type="text"  id="direccion" name="direccion" [(ngModel)]="data.direccion" #direccion="ngModel" placeholder="Ingrese el direccion" required>
+            <p *ngIf="!direccion.valid" class="p-warning">Este campo es obligatorio</p>
+        </label>
+        <label>
+            Fecha de Nacimiento::
+            <input type="date"  id="fecha_nacimiento" name="fecha_nacimiento" [(ngModel)]="data.fecha_nacimiento" #fecha_nacimiento="ngModel" placeholder="Ingrese el direccion" required>
+            <p *ngIf="!fecha_nacimiento.valid" class="p-warning">Este campo es obligatorio</p>
+        </label>
+        <button type="submit" class="send" [disabled]="!form.valid"
+            [class.valid]="form.valid"
+            [class.invalid]="!form.valid"
+        >{{clienteService.modal}}</button>
+    </form>
+</div>
