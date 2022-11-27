@@ -7,22 +7,22 @@
     </div>
     <div class="form-group mb-2">
         <label >Nombre</label>
-        <input type="text" class="form-control" placeholder="Ingrese los nombres del cliente" id="nombres" name="nombres" [(ngModel)]="this.cliente.nombres" #nombres="ngModel" required>
+        <input type="text" class="form-control" placeholder="Ingrese los nombres del cliente" id="nombres" name="nombres" [(ngModel)]="this.clienteService.seleccion.nombres" #nombres="ngModel" required>
         <p *ngIf="nombres.invalid" class="text-danger">Por favor rellene este campo </p>
     </div>
     <div class="form-group mb-2">
         <label >Apellidos</label>
-        <input type="text" class="form-control" placeholder="Ingrese los apellidos del cliente" id="apellidos" name="apellidos" [(ngModel)]="this.cliente.apellidos" #apellidos="ngModel" required>
+        <input type="text" class="form-control" placeholder="Ingrese los apellidos del cliente" id="apellidos" name="apellidos" [(ngModel)]="this.clienteService.seleccion.apellidos" #apellidos="ngModel" required>
         <p *ngIf="apellidos.invalid" class="text-danger">Por favor rellene este campo </p>
     </div>
     <div class="form-group mb-2">
         <label >Dirección</label>
-        <input type="text" class="form-control" placeholder="Ingrese la dirección del cliente" id="direccion" name="direccion" [(ngModel)]="this.cliente.direccion" #direccion="ngModel" required>
+        <input type="text" class="form-control" placeholder="Ingrese la dirección del cliente" id="direccion" name="direccion" [(ngModel)]="this.clienteService.seleccion.direccion" #direccion="ngModel" required>
         <p *ngIf="direccion.invalid" class="text-danger">Por favor rellene este campo </p>
     </div>
     <div class="form-group mb-2">
         <label >Fecha de Nacimiento</label>
-        <input type="date" class="form-control" id="fechaNacimiento" name="fechaNacimiento" [(ngModel)]="this.cliente.fechaNacimiento" #fechaNacimiento="ngModel" required>
+        <input type="date" class="form-control" id="fechaNacimiento" name="fechaNacimiento" [(ngModel)]="this.clienteService.seleccion.fechaNacimiento" #fechaNacimiento="ngModel" required>
         <p *ngIf="fechaNacimiento.invalid" class="text-danger">Por favor rellene este campo </p>
     </div>
     <div class="row text-center">

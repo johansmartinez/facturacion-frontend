@@ -4,27 +4,35 @@ import { Cliente } from '../modelos/cliente';
 import {map} from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 
+import { AlertasService } from "./alertas.service";
+import { Producto } from '../modelos/producto';
+import { Observable } from 'rxjs';
+
 @Injectable({
   providedIn: 'root'
 })
 export class ClienteService {
   
-  seleccionado:Cliente={
-    dni:'',
-    nombres:'',
-    apellidos:'',
-    direccion:'',
-    fechaNacimiento:''
+  seleccion:Cliente={
+    dni:"",
+    apellidos:"",
+    nombres:"",
+    direccion:"",
+    fechaNacimiento:""
   }
+
   clientes:Cliente[]=[];
-  constructor(private http:HttpClient) { }
+  
+  constructor(
+    private http:HttpClient,
+    private alertasService:AlertasService
+  ) { }
 
   reload(){
     this.http.get<Cliente[]>(`${environment.API_URL}/cliente`,{ withCredentials: true })
     .pipe(
       map(e=>{
         return e.map(i=>{
-          console.log(i)
           return {
             ...i,
             fecha_nacimiento:new Date(i.fechaNacimiento).toISOString().split('T')[0]
@@ -35,43 +43,49 @@ export class ClienteService {
     ).subscribe(data=>this.clientes=data)
   }
 
-  create(data:Cliente){
-    /*
-    this.http.post('http://localhost:3000/client', data)
+  async get(dni:string | null){
+    if (dni!="") {
+      await this.http.get<Cliente[]>(`${environment.API_URL}/cliente/${dni}`,{ withCredentials: true }).pipe(
+        map(e=>{
+          return e.map(i=>{
+            i.fechaNacimiento=new Date(i.fechaNacimiento).toISOString().split('T')[0]
+            return i;
+          })
+        })
+      )
+      .subscribe(data=>{
+        this.seleccion=data[0];
+      });
+    }else{
+      this.alertasService.error(`No hay un dni para editar`);
+    }
+  }
+
+  add(cliente:Cliente){
+    
+    return this.http.post(`${environment.API_URL}/cliente`, cliente)
       .subscribe(data=>{
         this.reload();
-        Swal.fire({
-          icon:'success',
-          text:'Se ha creado'
-        })
+        this.alertasService.success('El usuario se a creado exitosamente');
+        return true;
       },
-      err=>{
-        Swal.fire({
-          icon:'error',
-          text:'No se ha podido crear'
-        })
-      }
+        err=>{
+          this.alertasService.error(`${JSON.stringify(err.error.errors)}`);
+          return false;
+        }
       )
-    */
   }
 
   edit(){
-    /*
-    this.http.put('http://localhost:3000/client', this.seleccionado)
+    this.http.put(`${environment.API_URL}/cliente/${this.seleccion.dni}`, this.seleccion)
       .subscribe(data=>{
         this.reload();
-        Swal.fire({
-          icon:'success',
-          text:'Se ha editado'
-        })
+        this.get(this.seleccion.dni)
+        this.alertasService.success('El cliente se ha editado perfectamente')
       },
       err=>{
-        Swal.fire({
-          icon:'error',
-          text:'No se ha podido editar'
-        })
+        this.alertasService.error(`Ha ocurrido un error al editar el cliente\n${JSON.stringify(err)}`)
       }
-      )
-    */
+    )
   }
 }
