@@ -1,0 +1,30 @@
+<div class="">
+    <h2 class="card-title">Proveedores</h2>
+    <div class="row justify-content-between mb-2">
+        <div class="col-8">
+            <p>Panel de gestión de proveedores, a continuación se muestran los proveedores registrados </p>
+        </div>
+        <div class="col-4 justify-content-end">
+            <a class="btn btn-primary" routerLink="add">Agregar Proveedor</a>
+        </div>
+    </div>
+    <table class="table table-light table-striped table-hover table-sm">
+        <thead>
+            <tr>
+                <th scope="col">id</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let proveedor of this.proveedoresService.proveedores">
+                <td>{{proveedor.proveedorId}}</td>
+                <td>{{proveedor.nombre}}</td>
+                <td>
+                    <a class="btn btn-primary mx-2" routerLink="edit" [queryParams]="{id:proveedor.proveedorId}" >Editar</a>
+                    <button class="btn btn-danger" (click)="delete(proveedor.proveedorId, proveedor.nombre)">Borrar</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

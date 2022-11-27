@@ -27,9 +27,14 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/@popperjs/core/dist/umd/popper.min.js",
+              "node_modules/bootstrap/dist/js/bootstrap.min.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -74,6 +79,10 @@
               "browserTarget": "FRONTEND:build:development"
             }
           },
+          "options": {
+            "browserTarget": "FRONTEND:build",
+            "proxyConfig": "src/proxy.conf.json"
+          },
           "defaultConfiguration": "development"
         },
         "extract-i18n": {
@@ -102,5 +111,8 @@
       }
     }
   },
-  "defaultProject": "FRONTEND"
+  "defaultProject": "FRONTEND",
+  "cli": {
+    "analytics": "c1ee5e38-92d6-41b0-bdf7-a67f8d548043"
+  }
 }

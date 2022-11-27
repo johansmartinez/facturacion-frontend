@@ -1,0 +1,32 @@
+<div class="">
+    <h2 class="card-title">Facturas</h2>
+    <div class="row justify-content-between mb-2">
+        <div class="col-8">
+            <p>Panel de gestión de facturas, a continuación se muestran las facturas registradas </p>
+        </div>
+        <div class="col-4 justify-content-end">
+            <a class="btn btn-primary " routerLink="add">Agregar Factura</a>
+        </div>
+    </div>
+    <table class="table table-light table-striped table-hover table-sm">
+        <thead>
+            <tr>
+                <th scope="col">id</th>
+                <th scope="col">Fecha de facturación</th>
+                <th scope="col">Cliente</th>
+                <th scope="col">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let factura of facturasService.facturas">
+                <td>{{factura.id}}</td>
+                <td>{{factura.facturacion}}</td>
+                <td>{{factura.clienteDni}}</td>
+                <td>
+                    <a class="btn btn-primary mx-2" routerLink="edit" [queryParams]="{id:factura.id}" >Ver detalles</a>
+                    <button class="btn btn-danger" (click)="delete(factura.id)">Borrar</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

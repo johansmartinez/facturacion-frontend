@@ -1,0 +1,32 @@
+<div class="">
+    <h2 class="card-title">Productos</h2>
+    <div class="row justify-content-between mb-2">
+        <div class="col-8">
+            <p>Panel de gestión de productos, a continuación se muestran los productos registrados </p>
+        </div>
+        <div class="col-4 justify-content-end">
+            <a class="btn btn-primary " routerLink="add">Agregar Producto</a>
+        </div>
+    </div>
+    <table class="table table-light table-striped table-hover table-sm">
+        <thead>
+            <tr>
+                <th scope="col">Nombre</th>
+                <th scope="col">Precio unitario</th>
+                <th scope="col">Proveedor</th>
+                <th scope="col">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let producto of productosService.productos">
+                <td>{{producto.nombre}}</td>
+                <td>{{producto.precioUnitario}}</td>
+                <td>{{producto.proveedorNombre}}</td>
+                <td>
+                    <a class="btn btn-primary mx-2" routerLink="edit" [queryParams]="{id:producto.id}" >Editar</a>
+                    <button class="btn btn-danger" (click)="delete(producto.id, producto.nombre)">Borrar</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -1,7 +1,10 @@
 export interface Cliente {
     dni:string;
-    nombre:string;
-    apellido:string
+    nombres:string;
+    apellidos:string
     direccion:string;
-    fecha_nacimiento:string;
+    fechaNacimiento:string;
+}
+
+export interface ClientDTO extends Omit<Cliente, "dni">{
 }

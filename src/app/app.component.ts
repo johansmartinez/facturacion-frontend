@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { MenuService } from './servicios/menu.service';
 
 @Component({
   selector: 'app-root',
@@ -8,5 +7,5 @@ import { MenuService } from './servicios/menu.service';
 })
 export class AppComponent {
   title = 'FRONTEND';
-  constructor (public menuService:MenuService) {}
+  constructor () {}
 }

@@ -1,0 +1,13 @@
+<form #formadd="ngForm" (ngSubmit)="add($event)">
+    <h2>Agregar Proveedor</h2>
+    <p>A continuación se le permitira rellenar un formulario para agregar un proveedor</p>
+    <div class="form-group mb-2">
+        <label >Nombre</label>
+        <input type="text" class="form-control" placeholder="Ingrese el nombre del proveedor" id="nombre" name="nombre" [(ngModel)]="this.proveedor.nombre" #nombre="ngModel" required>
+        <p *ngIf="nombre.invalid" class="text-danger">Por favor rellene este campo </p>
+    </div>
+    <div class="row text-center">
+        <a href="proveedores" class="btn btn-secondary mb-2">Cancelar</a>
+        <button type="submit" [disabled]="!formadd.valid" class="btn btn-primary mb-2">Agregar</button>
+    </div>
+</form>

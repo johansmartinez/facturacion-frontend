@@ -1,5 +1,6 @@
 export interface Proveedor {
-    nif:string;
-    nombre:string;
-    direccion:string;
+    proveedorId:string,
+    nombre:string
 }
+
+export interface ProveedorDTO extends Omit<Proveedor, "proveedorId">{}

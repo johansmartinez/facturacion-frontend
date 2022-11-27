@@ -1,0 +1,45 @@
+<form #formadd="ngForm" (ngSubmit)="send($event)">
+    <h2>Agregar Factura</h2>
+    <p>A continuación se le permitira rellenar un formulario para agregar una factura</p>
+    <div class="form-group mb-2">
+        <label >Producto</label>
+        <input type="list" list="products-lists" class="form-control" id="producto" name="producto" [(ngModel)]="id" #producto="ngModel" required>
+        <datalist id="products-lists" >
+            <option value="-1">SELECCIONE UN PRODUCTO</option>
+            <option value="13123213">PRODUCTO 1</option>
+            <option value="544354">PRODUCTO 2</option>
+        </datalist>
+        <p *ngIf="producto.value=='-1'" class="text-danger">Por favor seleccione un producto </p>
+    </div>
+    <div class="form-group mb-2">
+        <label >Unidades</label>
+        <input type="number" class="form-control" placeholder="Ingrese las unidades del producto" id="unidades" name="unidades" [(ngModel)]="this.unidades" min="1" required>
+        <p *ngIf="unidades<=0" class="text-danger">Por favor rellene este campo correctamente</p>
+    </div>
+    <div class="row justify-content-end">
+        <button type="button" [disabled]="!producto.valid && this.unidades>0" class="btn btn-success mb-2" (click)="addItem()">Agregar</button>
+    </div>
+    <table *ngIf="this.productos.length>0" class="table table-light table-striped table-hover table-sm">
+        <thead>
+            <tr>
+                <th scope="col">producto</th>
+                <th scope="col">unidades</th>
+                <th scope="col">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let producto of this.productos">
+                <td>{{producto.nombre}}</td>
+                <td>{{producto.unidades}}</td>
+                <td>
+                    <button type="submit" class="btn btn-danger" (click)="removeItem(producto.id)">Eliminar</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <hr/>
+    <div class="row text-center">
+        <a href="productos" class="btn btn-secondary mb-2">Cancelar</a>
+        <button type="submit" [disabled]="this.productos.length>0" class="btn btn-primary mb-2">Enviar</button>
+    </div>
+</form>

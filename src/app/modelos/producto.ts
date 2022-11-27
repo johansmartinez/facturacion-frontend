@@ -1,18 +1,14 @@
 export interface Producto {
-    producto:string;
-    precio: number;
-    cod: number;
-    proveedor:string;
-    proveedor_id:string;
+    id:string,
+    nombre: string,
+    precioUnitario: number,
+    proveedorId: string,
+    proveedorNombre: string
 }
 
-export interface ProductoDTO {
-    nombre: string;
-    precio_unitario: number;
-    proveedor:string;
+export interface ProductoDTO extends Omit<Producto, "id" | "proveedorNombre">{
 }
 
-export interface CreateProducto extends ProductoDTO{
-    codigo:number;
+export interface ProductoFactura extends Omit<Producto, "proveedorNombre" | "proveedorId" | "precioUnitario">{
+    unidades:number
 }
-
