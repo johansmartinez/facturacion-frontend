@@ -15,13 +15,14 @@ export class PanelComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.proveedoresService.reload();
   }
 
   delete(id:string, nombre:string){
     this.alertasService.confirm(`¿Está seguro que quiere eliminar al proveedor: ${nombre}`)
     .then(result=>{
       if (result.isConfirmed) {
-        alert('si')
+        this.proveedoresService.delete(id);
       }
     })
   }

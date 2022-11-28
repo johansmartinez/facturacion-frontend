@@ -2,29 +2,53 @@
     <h2 class="card-title">Facturas</h2>
     <div class="row justify-content-between mb-2">
         <div class="col-8">
-            <p>Panel de gestión de facturas, a continuación se muestran las facturas registradas </p>
+            <p>Panel de gestión de facturas, a continuación se muestran las facturas registradas, junto a un filtro de mes y año </p>
         </div>
         <div class="col-4 justify-content-end">
             <a class="btn btn-primary " routerLink="add">Agregar Factura</a>
         </div>
     </div>
+    <div class="row justify-content-between mb-2">
+        <div class="row col-8">
+            <select  class="form-control mr-2 col" id="mes" name="mes" [(ngModel)]="this.mes" #messe="ngModel" required>
+                <option value="1">ENERO</option>
+                <option value="2">FEBRERO</option>
+                <option value="3">MARZO</option>
+                <option value="4">ABRIL</option>
+                <option value="5">MAYO</option>
+                <option value="6">JUNIO</option>
+                <option value="7">JULIO</option>
+                <option value="8">AGOSTO</option>
+                <option value="9">SEPTIEMBRE</option>
+                <option value="10">OCTUBRE</option>
+                <option value="11">NOVIEMBRE</option>
+                <option value="12">DICIEMBRE</option>
+            </select>
+            <input type="number" class="form-control col" min="0" id="anio" name="anio" [(ngModel)]="this.anio" #aniose="ngModel" required>
+            <p *ngIf="aniose.invalid" class="text-danger">Por favor ingrese un año válido </p>
+        </div>
+        <div class="col-4 justify-content-end">
+            <button [disabled]="messe.invalid || aniose.invalid" type="button" class="btn btn-primary mx-2" (click)="filter()">Filtrar</button>
+            <button type="button" class="btn btn-secondary " (click)="cleanFilter()">limpiar</button>
+        </div>
+    </div>
     <table class="table table-light table-striped table-hover table-sm">
         <thead>
             <tr>
-                <th scope="col">id</th>
                 <th scope="col">Fecha de facturación</th>
                 <th scope="col">Cliente</th>
+                <th scope="col">Total</th>
                 <th scope="col">Acciones</th>
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let factura of facturasService.facturas">
-                <td>{{factura.id}}</td>
+            <tr *ngFor="let factura of this.facturasService.facturas">
                 <td>{{factura.facturacion}}</td>
-                <td>{{factura.clienteDni}}</td>
+                <td>{{factura.clienteNombre + " " + factura.clienteApellido}}</td>
+                <td>{{factura.total | currency}}</td>
                 <td>
-                    <a class="btn btn-primary mx-2" routerLink="edit" [queryParams]="{id:factura.id}" >Ver detalles</a>
-                    <button class="btn btn-danger" (click)="delete(factura.id)">Borrar</button>
+                    <a class="btn btn-primary mx-2" routerLink="details" [queryParams]="{id:factura.facturaId}" >Ver detalles</a>
+                    <button class="btn btn-danger" (click)="delete(factura.facturaId)">Borrar</button>
                 </td>
             </tr>
         </tbody>

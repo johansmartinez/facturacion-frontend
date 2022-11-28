@@ -9,6 +9,8 @@ import { AlertasService } from "../../servicios/alertas.service";
 })
 export class PanelComponent implements OnInit {
 
+  mes:number=new Date().getMonth()+1;
+  anio:number=new Date().getFullYear();
   
   constructor(
     public facturasService:FacturasService,
@@ -16,14 +18,25 @@ export class PanelComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.facturasService.reload();
   }
 
   delete(id:string){
-    this.alertasService.confirm(`¿Está seguro que quiere eliminar la factura: ${id}`)
+    this.alertasService.confirm(`¿Está seguro que quiere eliminar la factura: ${id} ?`)
     .then(result=>{
       if (result.isConfirmed) {
-        alert('si')
+        this.facturasService.delete(id);
       }
     })
+  }
+
+  filter(){
+    this.facturasService.filter(this.mes,this.anio);
+  }
+
+  cleanFilter(){
+    this.mes=new Date().getMonth()+1;
+    this.anio=new Date().getFullYear();
+    this.facturasService.reload();
   }
 }

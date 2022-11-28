@@ -29,18 +29,17 @@ export class ClienteService {
   ) { }
 
   reload(){
-    this.http.get<Cliente[]>(`${environment.API_URL}/cliente`,{ withCredentials: true })
-    .pipe(
+    this.http.get<Cliente[]>(`${environment.API_URL}/cliente/`).pipe(
       map(e=>{
         return e.map(i=>{
-          return {
-            ...i,
-            fecha_nacimiento:new Date(i.fechaNacimiento).toISOString().split('T')[0]
-          }
-          
+          i.fechaNacimiento=new Date(i.fechaNacimiento).toISOString().split('T')[0]
+          return i;
         })
       })
-    ).subscribe(data=>this.clientes=data)
+    )
+    .subscribe(data=>{
+      this.clientes=data;
+    });
   }
 
   async get(dni:string | null){
@@ -66,11 +65,11 @@ export class ClienteService {
     return this.http.post(`${environment.API_URL}/cliente`, cliente)
       .subscribe(data=>{
         this.reload();
-        this.alertasService.success('El usuario se a creado exitosamente');
+        this.alertasService.success('El cliente se ha creado exitosamente');
         return true;
       },
         err=>{
-          this.alertasService.error(`${JSON.stringify(err.error.errors)}`);
+          this.alertasService.error(`Ha ocurrido un error al crear al cliente`);
           return false;
         }
       )
@@ -80,11 +79,23 @@ export class ClienteService {
     this.http.put(`${environment.API_URL}/cliente/${this.seleccion.dni}`, this.seleccion)
       .subscribe(data=>{
         this.reload();
-        this.get(this.seleccion.dni)
-        this.alertasService.success('El cliente se ha editado perfectamente')
+        this.get(this.seleccion.dni);
+        this.alertasService.success('El cliente se ha editado perfectamente');
       },
       err=>{
-        this.alertasService.error(`Ha ocurrido un error al editar el cliente\n${JSON.stringify(err)}`)
+        this.alertasService.error(`Ha ocurrido un error al editar el cliente`)
+      }
+    )
+  }
+
+  delete(dni:string){
+    this.http.delete(`${environment.API_URL}/cliente/${dni}`)
+    .subscribe(data=>{
+      this.reload();
+      this.alertasService.success('El cliente se ha eliminado perfectamente');
+    },
+      err=>{
+        this.alertasService.error(`Ha ocurrido un error al eliminar el cliente`)
       }
     )
   }

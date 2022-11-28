@@ -20,10 +20,10 @@ export class ClientesComponent implements OnInit {
   }
 
   delete(dni:string){
-    this.alertasService.confirm(`¿Está seguro que quiere eliminar al cliente identificado con dni: ${dni}`)
+    this.alertasService.confirm(`¿Está seguro que quiere eliminar al cliente identificado con dni: ${dni} ?`)
     .then(result=>{
       if (result.isConfirmed) {
-        alert('si')
+        this.clienteService.delete(dni);
       }
     })
   }

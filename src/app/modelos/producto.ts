@@ -12,3 +12,9 @@ export interface ProductoDTO extends Omit<Producto, "id" | "proveedorNombre">{
 export interface ProductoFactura extends Omit<Producto, "proveedorNombre" | "proveedorId" | "precioUnitario">{
     unidades:number
 }
+
+export interface ProductoFac{
+    productoNombre: string,
+    productoPrecio: number,
+    productoUnidades: number
+}

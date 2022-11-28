@@ -18,10 +18,10 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let producto of productosService.productos">
+            <tr *ngFor="let producto of this.productosService.productos">
                 <td>{{producto.nombre}}</td>
-                <td>{{producto.precioUnitario}}</td>
-                <td>{{producto.proveedorNombre}}</td>
+                <td>{{producto.precioUnitario | currency}}</td>
+                <td>{{producto.proveedorNombre || "* Sin proveedor * "}}</td>
                 <td>
                     <a class="btn btn-primary mx-2" routerLink="edit" [queryParams]="{id:producto.id}" >Editar</a>
                     <button class="btn btn-danger" (click)="delete(producto.id, producto.nombre)">Borrar</button>

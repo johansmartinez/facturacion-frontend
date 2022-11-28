@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ProductoDTO } from 'src/app/modelos/producto';
+
+import { ProductosService } from "../../servicios/productos.service";
+import { ProveedoresService } from "../../servicios/proveedores.service";
 
 @Component({
   selector: 'app-edit',
@@ -10,24 +12,23 @@ import { ProductoDTO } from 'src/app/modelos/producto';
 export class EditComponent implements OnInit {
   id:string|null="";
 
-  producto:ProductoDTO={
-    nombre:"",
-    precioUnitario:0,
-    proveedorId:"-1",
-  };
-
   constructor(
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    public productosService:ProductosService,
+    public proveedoresService:ProveedoresService
   ) { }
 
   ngOnInit(): void {
+    this.proveedoresService.reload();
     this.route.queryParams.subscribe(p=>{
       this.id=p['id']
     })
+    this.productosService.get(this.id);
   }
 
   edit(event:Event){
     event.preventDefault();
+    this.productosService.edit();
   }
 
 }

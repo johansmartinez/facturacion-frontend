@@ -11,7 +11,7 @@ const routes: Routes = [
     component:PanelComponent
   },
   {
-    path:'edit',
+    path:'details',
     pathMatch:'full',
     component:EditComponent
   },

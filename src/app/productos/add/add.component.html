@@ -8,15 +8,14 @@
     </div>
     <div class="form-group mb-2">
         <label >Precio Unitario</label>
-        <input type="number" class="form-control" placeholder="Ingrese el precio unitario del producto" id="precioUnitario" name="precioUnitario" [(ngModel)]="this.producto.precioUnitario" #precioUnitario="ngModel" min="0" required>
+        <input type="number" class="form-control" placeholder="Ingrese el precio unitario del producto" id="precioUnitario" name="precioUnitario" [(ngModel)]="this.producto.precioUnitario" #precioUnitario="ngModel" min="1" required>
         <p *ngIf="precioUnitario.invalid" class="text-danger">Por favor rellene este campo correctamente</p>
     </div>
     <div class="form-group mb-2">
         <label >Proveedor</label>
         <select  class="form-control" id="proveedor" name="proveedor" [(ngModel)]="this.producto.proveedorId" #proveedor="ngModel" required>
             <option value="-1">SELECCIONE UN PROVEEDOR</option>
-            <option value="13123213">PROVEDDOR 1</option>
-            <option value="544354">PROVEDDOR 2</option>
+            <option *ngFor="let prov of this.proveedoresService.proveedores" [value]="prov.proveedorId">{{prov.nombre}}</option>
         </select>
         <p *ngIf="proveedor.value=='-1'" class="text-danger">Por favor seleccione un proveedor </p>
     </div>

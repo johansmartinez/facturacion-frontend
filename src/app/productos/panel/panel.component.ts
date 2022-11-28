@@ -15,13 +15,14 @@ export class PanelComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.productosService.reload();
   }
 
   delete(id:string, nombre:string){
     this.alertasService.confirm(`¿Está seguro que quiere eliminar el producto: ${nombre}`)
     .then(result=>{
       if (result.isConfirmed) {
-        alert('si')
+        this.productosService.delete(id);
       }
     })
   }
