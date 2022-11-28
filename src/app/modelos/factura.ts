@@ -1,4 +1,4 @@
-import { ProductoFac } from "./producto";
+import { ProductoFac, ProductoFactura } from "./producto";
 
 export interface Factura {
     facturaId:string,
@@ -9,6 +9,10 @@ export interface Factura {
     total:number
 }
 
+export interface CreateFactura{
+    clienteDni: string
+}
+
 export interface FacturaDTO{
     facturacion: string,
     facturaId:string,
@@ -17,4 +21,9 @@ export interface FacturaDTO{
     clienteApellido: string,
     total:number,
     productos: ProductoFac[]
+}
+
+export interface FacturaDSO{
+    clienteDni: string,
+    productos: ProductoFactura[]
 }

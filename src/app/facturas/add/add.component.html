@@ -2,14 +2,18 @@
     <h2>Agregar Factura</h2>
     <p>A continuación se le permitira rellenar un formulario para agregar una factura</p>
     <div class="form-group mb-2">
+        <label >Cliente</label>
+        <select  class="form-control" id="dni" name="dni" [(ngModel)]="dni" #dnise="ngModel" required>
+            <option *ngFor="let c of this.clienteService.clientes" [value]="c.dni">{{c.nombres +" "+ c.apellidos}}</option>
+        </select>
+        <p *ngIf="dnise.invalid" class="text-danger">Por favor seleccione un cliente </p>
+    </div>
+    <div class="form-group mb-2">
         <label >Producto</label>
-        <input type="list" list="products-lists" class="form-control" id="producto" name="producto" [(ngModel)]="id" #producto="ngModel" required>
-        <datalist id="products-lists" >
-            <option value="-1">SELECCIONE UN PRODUCTO</option>
-            <option value="13123213">PRODUCTO 1</option>
-            <option value="544354">PRODUCTO 2</option>
-        </datalist>
-        <p *ngIf="producto.value=='-1'" class="text-danger">Por favor seleccione un producto </p>
+        <select list="products-lists" class="form-control" id="producto" name="producto" [(ngModel)]="id" #producto="ngModel" required>
+            <option *ngFor="let p of this.productosService.productos" [value]="p.id">{{p.nombre}}</option>
+        </select>
+        <p *ngIf="producto.invalid" class="text-danger">Por favor seleccione un producto </p>
     </div>
     <div class="form-group mb-2">
         <label >Unidades</label>
@@ -19,27 +23,38 @@
     <div class="row justify-content-end">
         <button type="button" [disabled]="!producto.valid && this.unidades>0" class="btn btn-success mb-2" (click)="addItem()">Agregar</button>
     </div>
-    <table *ngIf="this.productos.length>0" class="table table-light table-striped table-hover table-sm">
-        <thead>
-            <tr>
-                <th scope="col">producto</th>
-                <th scope="col">unidades</th>
-                <th scope="col">Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let producto of this.productos">
-                <td>{{producto.nombre}}</td>
-                <td>{{producto.unidades}}</td>
-                <td>
-                    <button type="submit" class="btn btn-danger" (click)="removeItem(producto.id)">Eliminar</button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <div *ngIf="this.productos.length>0">
+        <hr/>
+        <h3 class="text-center">Listado de compras</h3>
+        <table  class="table table-light table-striped table-hover table-sm">
+            <thead>
+                <tr>
+                    <th scope="col">Producto</th>
+                    <th scope="col">Unidades</th>
+                    <th scope="col">Total</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let producto of this.productos">
+                    <td>{{producto.nombre}}</td>
+                    <td>{{producto.unidades}}</td>
+                    <td>{{(producto.unidades * producto.precioUnitario) | currency}}</td>
+                    <td>
+                        <button type="submit" class="btn btn-danger" (click)="removeItem(producto.id)">Eliminar</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="form-group mb-2 ">
+            <h4 class="text-end" >Total:</h4>
+            <p class="text-end"> {{ this.total()| currency }}</p>
+        </div>
+    </div>
+    
     <hr/>
     <div class="row text-center">
-        <a href="productos" class="btn btn-secondary mb-2">Cancelar</a>
-        <button type="submit" [disabled]="this.productos.length>0" class="btn btn-primary mb-2">Enviar</button>
+        <a href="facturas" class="btn btn-secondary mb-2">Cancelar</a>
+        <button type="submit" [disabled]="this.productos.length<1" class="btn btn-primary mb-2">Enviar</button>
     </div>
 </form>

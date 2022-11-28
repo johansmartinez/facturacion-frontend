@@ -50,7 +50,7 @@ export class ProductosService {
         return true;
       },
         err=>{
-          this.alertasService.error(`Ha ocurrido un error al crear al producto\n ${JSON.stringify(err)}`);
+          this.alertasService.error(`Ha ocurrido un error al crear al producto`);
           return false;
         }
       )
@@ -79,5 +79,9 @@ export class ProductosService {
         this.alertasService.error(`Ha ocurrido un error al eliminar el producto`)
       }
     )
+  }
+
+  find(id:string){
+    return this.productos.find(e=>e.id==id);
   }
 }

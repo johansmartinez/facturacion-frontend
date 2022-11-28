@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Factura, FacturaDTO } from '../modelos/factura';
+import { Factura, FacturaDSO, FacturaDTO,CreateFactura } from '../modelos/factura';
 import { AlertasService } from './alertas.service';
 
 
@@ -10,7 +10,7 @@ import { AlertasService } from './alertas.service';
   providedIn: 'root'
 })
 export class FacturasService {
-
+  
   seleccion:FacturaDTO={
     facturaId:"",
     facturacion:"",
@@ -21,25 +21,57 @@ export class FacturasService {
     total:0
   }
   facturas:Factura[]=[];
-
+  
   constructor(
     private http:HttpClient,
     private alertasService:AlertasService
-  ) { }
-
-  reload(){
-    this.http.get<Factura[]>(`${environment.API_URL}/factura/`).pipe(
-      map(e=>{
+    ) { }
+    
+    reload(){
+      this.http.get<Factura[]>(`${environment.API_URL}/factura/`).pipe(
+        map(e=>{
         return e.map(i=>{
           i.facturacion=new Date(i.facturacion).toISOString().split('T')[0];
           return i;
         })
       })
-    )
-    .subscribe(data=>{
-      this.facturas=data;
-    });
-  }
+      )
+      .subscribe(data=>{
+        this.facturas=data;
+      });
+    }
+    
+    add(factura: FacturaDSO) {
+      let temp:CreateFactura={
+        clienteDni:factura.clienteDni
+      }
+      return this.http.post(`${environment.API_URL}/factura`, temp)
+      .subscribe(data=>{
+        let temp:any[]= factura.productos.map(e=> 
+          ({
+            facturaId:data,
+            unidades:e.unidades,
+            productoId:e.id
+          })
+        )
+        this.http.post(`${environment.API_URL}/venta`, temp)
+        .subscribe(ventas=>{
+          this.reload();
+          this.alertasService.success('La facura se ha creado exitosamente');
+          return true
+        },
+          err=>{
+            this.alertasService.error(`Ha ocurrido un error al crear la venta\n ${JSON.stringify(err)}`);
+            return false;
+          }
+        )
+      },
+        err=>{
+          this.alertasService.error(`Ha ocurrido un error al crear la factura\n ${JSON.stringify(err)}`);
+          return false;
+        }
+      )
+    }
 
   async get(id:string | null){
     if (id!="") {
