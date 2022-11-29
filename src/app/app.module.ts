@@ -8,7 +8,9 @@ import { NavComponent } from './componentes/nav/nav/nav.component';
 import { FechaPipe } from './pipelines/fecha.pipe';
 import { MonedaPipe } from './pipelines/moneda.pipe';
 
-import {ClientesComponent} from './clientes/panel/clientes.component'
+import {ClientesComponent} from './clientes/panel/clientes.component';
+import { NotfoundComponent } from './componentes/notfound/notfound.component';
+import { HomeComponent } from './componentes/home/home.component'
 
 @NgModule({
   declarations: [
@@ -17,6 +19,8 @@ import {ClientesComponent} from './clientes/panel/clientes.component'
     ClientesComponent,
     FechaPipe,
     MonedaPipe,
+    NotfoundComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,

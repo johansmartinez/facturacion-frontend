@@ -1,7 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { NotfoundComponent } from "./componentes/notfound/notfound.component";
+import { HomeComponent } from "./componentes/home/home.component";
+
 const routes: Routes = [
+  {
+    path:'',
+    redirectTo:'/home',
+    pathMatch:'full'
+  },
   {
     path: 'clientes',
     data:{
@@ -30,6 +38,16 @@ const routes: Routes = [
     },
     loadChildren: () => import('./facturas/facturas.module').then(m => m.FacturasModule)
   },
+  {
+    path: 'home',
+    pathMatch:'full',
+    component: HomeComponent
+  },
+  {
+    path: '**',
+    component: NotfoundComponent
+  },
+  
 ];
 
 @NgModule({
